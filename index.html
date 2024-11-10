@@ -44,8 +44,14 @@
                 logToPage('Error: forgeViewer div not found');
                 
             }
+            
 
             const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
+            viewer.loadExtension('Autodesk.Viewing.Measure').then(function() {
+            logToPage('Measure extension loaded successfully');
+             }).catch(function(error) {
+             logToPage('Error loading Measure extension: ' + error);
+              });
             const viewerStarted = viewer.start();
             if (!viewerStarted) {
                 logToPage('Error: Viewer failed to start');
