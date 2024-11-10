@@ -53,12 +53,12 @@
             logToPage('Viewer started successfully');
 
             // Check if extensions are registered
-            const registeredExtensions = viewer.getRegisteredExtensions();
-            if (registeredExtensions.length > 0) {
-                logToPage('Registered Extensions: ' + registeredExtensions.join(', '));
-            } else {
-                logToPage('No extensions are currently registered.');
-            }
+           // const registeredExtensions = viewer.getRegisteredExtensions();
+            //if (registeredExtensions.length > 0) {
+             //   logToPage('Registered Extensions: ' + registeredExtensions.join(', '));
+           // } else {
+               // logToPage('No extensions are currently registered.');
+           // }
 
             // Load the MeasureTools extension
             viewer.loadExtension('Autodesk.Viewing.MeasureTools').then(function() {
