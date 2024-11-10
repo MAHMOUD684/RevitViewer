@@ -26,9 +26,8 @@
             logDiv.appendChild(newMessage);
         }
 
-        // Update with a new token and valid URN
         const options = {
-            accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6InExVTlHTlBQR0d6WjdBeDNyMUdneGhEUXRMSlYwNUxPUW9TY3d0MHZWRktPNmp5N0xleHZMNmZWTWJXNlBTcU0iLCJleHAiOjE3MzEyNzc4OTN9.fKm94LLzdUrPVheOD2-Rkk1nZV8Ct8JsrfMHf5gy-6Eohiv6VWzqdyoAbQYFUHc-AI5MB9JNn0ozu2x5urKqj6BLOjbN_uLbo5IElQKCzqWdyMchVL7oKv2H1I8Jire0qwkO5B4upQ-5juCwJlerXVYFh5uMGNaGSumekSZUhYv_gFqOByPuziOI6ei6hBnDdn_cQrKc-TFo4TWsNSI91FO8TzHFnvGhzuqgAITRYtPcgTYqoc_mKTIx-4BC0qWhZIlKSWhwE1myml-aFuy_B6S_y2hlQK5px3CybdmAxSGGSZwZLmT5-gMWGkwDWbvKAlMlTepEITzD4N4tAfC1iA',
+            accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6IjZwTVVKblRjeUFKeEpNemRsSTFZR0lMbmxVZFd2TXpsNVRkSGlxb3dNdm1ndE00S3ZFWjRrYkROdkdtaVJmM2oiLCJleHAiOjE3MzEyNzg2NTF9.ZS0DTIN_82Mhd1qqOwwlviYa_oTk0xoCdtCLenDSSiElhtNd4uzFkHwLOOM9foXfsDNwREep6ytiIcl5FVBAGBNp0hMez_Ebwaw-2vWIM5C8WOAKKEmNIm9oWhecAPGYxfk0UeDc609ssBcdgAXaGbfiP2bXXgprtrowsriPnBTlKmnsUuYIrzq3x79uTutXBh7Fa6VdYy0D8vQG8IoBvNFC68nSTYKm2ftMOi8C5m-RZ5jUVdxFJ7WmAInY7wNo-JpDUTOl77c-zXdB6mC6eQ4yFBEZkQnh6I6Wlcut-QM6xgVgOCONrN97vwre51ek5dyvXrLX6Z31kEK7gdDunw', // Replace with your actual access token
             env: 'AutodeskProduction'
         };
 
@@ -53,9 +52,13 @@
 
             logToPage('Viewer started successfully');
 
-            // Check registered extensions
+            // Check if extensions are registered
             const registeredExtensions = viewer.getRegisteredExtensions();
-            logToPage('Registered Extensions: ' + registeredExtensions.join(', '));
+            if (registeredExtensions.length > 0) {
+                logToPage('Registered Extensions: ' + registeredExtensions.join(', '));
+            } else {
+                logToPage('No extensions are currently registered.');
+            }
 
             // Load the MeasureTools extension
             viewer.loadExtension('Autodesk.Viewing.MeasureTools').then(function() {
