@@ -41,13 +41,13 @@
             const viewerDiv = document.getElementById('forgeViewer');
             if (!viewerDiv) {
                 logToPage('Error: forgeViewer div not found');
-                return;
+                
             }
 
             const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
             if (!viewer.start()) {
                 logToPage('Error: Viewer failed to start');
-                return;
+                
             }
 
             logToPage('Viewer started successfully');
