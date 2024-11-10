@@ -28,7 +28,7 @@
 
         // Update with a new token and valid URN
         const options = {
-            accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6IlJyY285YW9vTEtqUGJzaEhPT1FLeVpxdHpoaVVsdzk3T0pnVHZNSUE4T1hheFpZVXZ5aGxBNThNRlVXSVV4RjkiLCJleHAiOjE3MzEyNzQwMzB9.aA1iqKTgKuWrURBoNgOjXAp4T-QLGH4y6zlB0mlzc0U-T_w6DdBgWjQaa0eazHjjVyvY7TfP5opT987v4We20AhurBS-luxykW7b45mnt0dUwhtMreJVMJEAyrQjRam4sUYriuYupihOGWpTkJ7XuyWbjho33VVpkJ5MciGnNM92yjm_u-ZNYzc9e0KWoXiXu_EqgWTJwd3cJAjMjGPbs_y3FAReMkG-IJO2giA-HHhzAmntFzWOnO_hWW-klk3ojR0jrtdFDmfBHlko1I0Jxkslk3h4WD79L3xGmzIpnm-wPYK6tN4fBR6mwkxdPk8Prqgh5CgAOprM6EeUOv8unw',
+            accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6InExVTlHTlBQR0d6WjdBeDNyMUdneGhEUXRMSlYwNUxPUW9TY3d0MHZWRktPNmp5N0xleHZMNmZWTWJXNlBTcU0iLCJleHAiOjE3MzEyNzc4OTN9.fKm94LLzdUrPVheOD2-Rkk1nZV8Ct8JsrfMHf5gy-6Eohiv6VWzqdyoAbQYFUHc-AI5MB9JNn0ozu2x5urKqj6BLOjbN_uLbo5IElQKCzqWdyMchVL7oKv2H1I8Jire0qwkO5B4upQ-5juCwJlerXVYFh5uMGNaGSumekSZUhYv_gFqOByPuziOI6ei6hBnDdn_cQrKc-TFo4TWsNSI91FO8TzHFnvGhzuqgAITRYtPcgTYqoc_mKTIx-4BC0qWhZIlKSWhwE1myml-aFuy_B6S_y2hlQK5px3CybdmAxSGGSZwZLmT5-gMWGkwDWbvKAlMlTepEITzD4N4tAfC1iA',
             env: 'AutodeskProduction'
         };
 
@@ -54,7 +54,7 @@
                 
             }
             logToPage(viewer.getRegisteredExtensions());
-            viewer.loadExtension('Autodesk.Viewing.Measure').then(function() {
+            viewer.downloadExtension('Autodesk.Viewing.Measure').then(function() {
             logToPage('Measure extension loaded successfully');
              }).catch(function(error) {
              logToPage('Error loading Measure extension: ' + error);
