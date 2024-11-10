@@ -17,14 +17,42 @@
 
         const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djEvSFNULg=='; // Replace with your actual model URN
 
+        alert('Starting Autodesk.Viewing.Initializer');
+
         Autodesk.Viewing.Initializer(options, function() {
+            alert('Forge Viewer Initialized');
+
             const viewerDiv = document.getElementById('forgeViewer');
+            if (!viewerDiv) {
+                alert('Error: forgeViewer div not found');
+                return;
+            }
+
             const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-            viewer.start();
+            const viewerStarted = viewer.start();
+            if (!viewerStarted) {
+                alert('Error: Viewer failed to start');
+                return;
+            }
+            alert('Viewer started successfully');
 
             Autodesk.Viewing.Document.load(documentId, function(doc) {
+                alert('Document loaded successfully');
+
                 const defaultModel = doc.getRoot().getDefaultGeometry();
-                viewer.loadDocumentNode(doc, defaultModel);
+                if (!defaultModel) {
+                    alert('Error: Default model geometry not found');
+                    return;
+                }
+
+                const modelLoaded = viewer.loadDocumentNode(doc, defaultModel);
+                if (modelLoaded) {
+                    alert('Model loaded successfully in viewer');
+                } else {
+                    alert('Error: Failed to load model in viewer');
+                }
+            }, function(error) {
+                alert('Error loading document: ' + error);
             });
         });
     </script>
