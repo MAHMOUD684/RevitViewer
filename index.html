@@ -76,7 +76,7 @@
                     logToPage('Error: Default model geometry not found');
                     return;
                 }
-
+                viewer.getCamera();
                 viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                     logToPage('Model loaded successfully in viewer');
                 }, function(errorCode, errorMessage) {
