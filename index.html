@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forge Viewer App</title>
+    <title>Forge Viewer Debug</title>
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
 </head>
 <body>
     <h1>Forge Viewer Test</h1>
-    <div id="forgeViewer" style="width: 100%; height: 100vh;"></div>
+    
+    <!-- Log area to display messages directly on the page -->
+    <div id="log" style="background-color: #f8f8f8; padding: 10px; max-height: 200px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 14px;">
+        <strong>Log Output:</strong>
+        <div id="logMessages"></div>
+    </div>
+    
+    <div id="forgeViewer" style="width: 100%; height: 80vh; margin-top: 10px;"></div>
+    
     <script>
+        function logToPage(message) {
+            const logDiv = document.getElementById('logMessages');
+            const newMessage = document.createElement('p');
+            newMessage.textContent = message;
+            logDiv.appendChild(newMessage);
+        }
+
         const options = {
             accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6ImNtM1dYNFh2eW9TZDE0SVVzSDdIckZtcmc1TXBNbEJ0cm5uT041MWk0cVM3eHRqbVh4M09jbm9NSGtLZEJKU1giLCJleHAiOjE3MzEyNjQ0OTV9.PO3_ngSOGm7gD2Rm0hzbwpey18rvF1pzJdZd7cdYBIP2EwP2qaLQGbXOXOWFFNFmZpDC3RqpAn54w3WTm6hGq36l-IsDVCks6ItxNYt2bcP1DwH82oD4ORNsgkoKVoRX5j5NONux6utTRuuMnvp_6VP8MWizl9o1bKScgSZfGpK9ElIAT5tQ8P-fIEjw_HDfMOYrIO-_F-W3-giLqFaH7SHISjIqD3l6lLPEx9Hd1ho9GNTimUEEW1CrQSm9ASLie8QfvsgjQ76w4tG56HF_ef6tZyvU_8nseHNSQ3_lYjBbqPjTvoSPGgXQY-3k1Ch0hN4BouToIq3yOBHkIkG2GQ',
             env: 'AutodeskProduction'
@@ -17,42 +32,41 @@
 
         const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djEvSFNULg=='; // Replace with your actual model URN
 
-        alert('Starting Autodesk.Viewing.Initializer');
+        logToPage('Initializing Forge Viewer');
 
         Autodesk.Viewing.Initializer(options, function() {
-            alert('Forge Viewer Initialized');
+            logToPage('Forge Viewer Initialized');
 
             const viewerDiv = document.getElementById('forgeViewer');
             if (!viewerDiv) {
-                alert('Error: forgeViewer div not found');
+                logToPage('Error: forgeViewer div not found');
                 return;
             }
 
             const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
             const viewerStarted = viewer.start();
             if (!viewerStarted) {
-                alert('Error: Viewer failed to start');
+                logToPage('Error: Viewer failed to start');
                 return;
             }
-            alert('Viewer started successfully');
+            logToPage('Viewer started successfully');
 
             Autodesk.Viewing.Document.load(documentId, function(doc) {
-                alert('Document loaded successfully');
+                logToPage('Document loaded successfully');
 
                 const defaultModel = doc.getRoot().getDefaultGeometry();
                 if (!defaultModel) {
-                    alert('Error: Default model geometry not found');
+                    logToPage('Error: Default model geometry not found');
                     return;
                 }
 
-                const modelLoaded = viewer.loadDocumentNode(doc, defaultModel);
-                if (modelLoaded) {
-                    alert('Model loaded successfully in viewer');
-                } else {
-                    alert('Error: Failed to load model in viewer');
-                }
+                viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
+                    logToPage('Model loaded successfully in viewer');
+                }, function(errorCode, errorMessage) {
+                    logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
+                });
             }, function(error) {
-                alert('Error loading document: ' + error);
+                logToPage('Error loading document: ' + JSON.stringify(error));
             });
         });
     </script>
