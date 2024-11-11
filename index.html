@@ -91,11 +91,12 @@
                 logToPage('Viewer started successfully');
 
                 // Load the MeasureTools extension
-                viewer.loadExtension('Autodesk.Viewing.MeasureTools').then(function() {
-                    logToPage('Measure extension loaded successfully');
+                viewer.loadExtension('Autodesk.Explode').then(function() {
+                    logToPage('Expload loaded successfully');
                 }).catch(function(error) {
                     logToPage('Error loading Measure extension: ' + error);
                 });
+                
 
                 // Load the document
                 Autodesk.Viewing.Document.load(documentId, function(doc) {
