@@ -93,7 +93,7 @@ viewer.loadExtension('Autodesk.Viewing.ModelStructure'); // Model tree/structure
                   // Activate Measure tool
 var measureExtension = viewer.getExtension('Autodesk.Measure');
 if (measureExtension) {
-    measureExtension.activate();
+   // measureExtension.activate();
 }
 
 // Activate Section tool
@@ -106,20 +106,20 @@ if (sectionExtension) {
 // Activate Walk-through mode
 var bimWalkExtension = viewer.getExtension('Autodesk.BimWalk');
 if (bimWalkExtension) {
-    bimWalkExtension.activate();
+   // bimWalkExtension.activate();
 }
 
 // Activate Markup tool
 var markupsExtension = viewer.getExtension('Autodesk.Viewing.MarkupsCore');
 if (markupsExtension) {
-    markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
+   // markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
    // logToPage('markupsExtension exist');
 }
 
 // Open Model Structure (Model Browser) panel
 var modelStructureExtension = viewer.getExtension('Autodesk.Viewing.ModelStructure');
 if (modelStructureExtension) {
-    modelStructureExtension.show(); // Shows the model structure panel
+  //  modelStructureExtension.show(); // Shows the model structure panel
 } 
 
                 logToPage('Viewer started successfully');
