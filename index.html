@@ -27,35 +27,31 @@
             logDiv.appendChild(newMessage);
         }
 
-        async function getToken(clientId, clientSecret) {
-            const url = "https://developer.api.autodesk.com/authentication/v1/authenticate";
-            const headers = {
-                "Content-Type": "application/x-www-form-urlencoded"
-            };
-            const body = new URLSearchParams({
-                client_id: clientId,
-                client_secret: clientSecret,
-                grant_type: "client_credentials",
-                scope: "data:read data:write" // Add or adjust scopes as needed
-            });
+        async function getToken() {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+             myHeaders.append("Accept", "application/json");
+myHeaders.append("Authorization", "Basic NTdtTVIweXNPM0FmRzhtNHdjVHVrMmlMd05MVEFXVUQwcmZTb09ZRGlsS3dZUks2OmJMWFNFQWRDMzhHTDFnSk82c0VEV3phQTRheURHNWNOZk84M1k0TG1DMDRZUjBMZTJ2eUFuTzdGOUVhdWhsNFE=");
 
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: headers,
-                    body: body
-                });
+const urlencoded = new URLSearchParams();
+urlencoded.append("grant_type", "client_credentials");
+urlencoded.append("scope", "code:all data:write data:read bucket:create bucket:delete bucket:read");
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: "follow"
+};
 
-                const data = await response.json();
-                return data.access_token;
-            } catch (error) {
-                console.error("Error fetching token:", error);
-                logToPage('Error fetching token: ' + error.message);
-            }
+fetch("https://developer.api.autodesk.com/authentication/v2/token", requestOptions)
+  .then((response) => response.json())
+  .then((result) => return result.access_token)
+  .catch((error) => console.error(error));
+
+                
+                
+             
         }
 
         async function initializeViewer() {
