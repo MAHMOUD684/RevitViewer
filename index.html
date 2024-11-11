@@ -6,6 +6,12 @@
     <title>Forge Viewer Test</title>
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.css" />
+    <style>
+        #forgeViewer {
+            width: 100%;
+            height: 90vh; /* Fixed height of 90% of the viewport height */
+        }
+    </style>
 </head>
 <body>
     <h1>Forge Viewer Test</h1>
@@ -63,7 +69,7 @@
             const accessToken = await getToken();
             if (!accessToken) {
                 logToPage('Failed to retrieve access token.');
-                
+                return;
             }
 
             const options = {
@@ -79,23 +85,14 @@
                 const viewerDiv = document.getElementById('forgeViewer');
                 if (!viewerDiv) {
                     logToPage('Error: forgeViewer div not found');
-                    
+                    return;
                 }
 
-                const viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
+                const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv); // Use GuiViewer3D
                 viewer.start();
-             //   viewer.setToolbarVisibility(true);
-                viewer.loadExtension('Autodesk.Measure');           // Ruler/Measurement tool
-
-
-// Open Model Structure (Model Browser) panel
-
+                viewer.loadExtension('Autodesk.Measure');  // Load Measure Tool extension
 
                 logToPage('Viewer started successfully');
-
-                // Load the MeasureTools extension
-                
-                
 
                 // Load the document
                 Autodesk.Viewing.Document.load(documentId, function(doc) {
@@ -104,12 +101,12 @@
                     const defaultModel = doc.getRoot().getDefaultGeometry();
                     if (!defaultModel) {
                         logToPage('Error: Default model geometry not found');
-                        
+                        return;
                     }
 
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
-                        viewer.explode(.7);
+                        viewer.explode(0.7);
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
