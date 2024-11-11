@@ -120,7 +120,12 @@ var modelStructureExtension = viewer.getExtension('Autodesk.Viewing.ModelStructu
 if (modelStructureExtension) {
     modelStructureExtension.show(); // Shows the model structure panel
 }
-              viewer.setToolbarVisibility(true); // To show the toolbar
+            // Assuming 'viewer' is already initialized
+const toolbar = viewer.getToolbar();
+if (toolbar) {
+    toolbar.setVisible(true); // To make the toolbar visible
+    // toolbar.setVisible(false); // To hide the toolbar
+} // To show the toolbar
                 viewer.loadExtension('Autodesk.Measure');  // Load Measure Tool extension
 
                 logToPage('Viewer started successfully');
