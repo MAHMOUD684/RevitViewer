@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.css" />
 </head>
 <body>
-    <h1>Forge Viewer Test </h1>
+    <h1>Forge Viewer Test</h1>
     
     <!-- Log area to display messages directly on the page -->
     <div id="log" style="background-color: #f8f8f8; padding: 10px; max-height: 200px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 14px;">
@@ -83,7 +83,7 @@
                 }
 
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-                if (0 > viewer.start()) {
+                if (!viewer.start()) {
                     logToPage('Error: Viewer failed to start');
                     
                 }
@@ -91,11 +91,11 @@
                 logToPage('Viewer started successfully');
 
                 // Load the MeasureTools extension
-                viewer.loadExtension('Autodesk.Explode').then(function(explodeExtension)=> {
+                viewer.loadExtension('Autodesk.Explode').then((explodeExtension)=> {
                 console.log('Explode extension loaded:', explodeExtension);
                  explodeExtension.activate();
     // Now you can use `explodeExtension` to access the Explode API or its specific methods
-                }).catch(function(error) =>{
+                }).catch((error) =>{
                     console.log('Error loading Explode extension:', error);
                 });
                 
@@ -113,7 +113,6 @@
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
                         viewer.explode(.7);
-                        
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
@@ -121,7 +120,6 @@
                     logToPage('Error loading document: ' + JSON.stringify(error));
                 });
             });
-            
         }
 
         // Call initializeViewer to start the viewer when the page is loaded
