@@ -98,7 +98,7 @@
                 }).catch((error) =>{
                     console.log('Error loading Explode extension:', error);
                 });
-                viewer.explode(.7);
+                
 
                 // Load the document
                 Autodesk.Viewing.Document.load(documentId, function(doc) {
@@ -112,6 +112,7 @@
 
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
+                        viewer.explode(.7);
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
