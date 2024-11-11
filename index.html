@@ -83,7 +83,7 @@
                 }
 
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-                if (!viewer.start()) {
+                if (0 > viewer.start()) {
                     logToPage('Error: Viewer failed to start');
                     
                 }
@@ -91,7 +91,7 @@
                 logToPage('Viewer started successfully');
 
                 // Load the MeasureTools extension
-                viewer.loadExtension('Autodesk.Explode').then((explodeExtension)=> {
+                viewer.loadExtension('Autodesk.Explode').then(function(explodeExtension)=> {
                 console.log('Explode extension loaded:', explodeExtension);
                  explodeExtension.activate();
     // Now you can use `explodeExtension` to access the Explode API or its specific methods
@@ -120,6 +120,9 @@
                     logToPage('Error loading document: ' + JSON.stringify(error));
                 });
             });
+            viewer.forEachExtension(function(ext){
+    logToPage(ext.id);
+ })
         }
 
         // Call initializeViewer to start the viewer when the page is loaded
