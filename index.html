@@ -16,7 +16,10 @@
         <div id="logMessages"></div>
     </div>
     
-    <div id="forgeViewer" style="width: 100%; height: 90%; margin-top: 10px;"></div>
+    #forgeViewer {
+    width: 100%;
+    height: calc(100vh - 100px); /* Assuming header and log take up about 100px */
+}
     
     <script>
         function logToPage(message) {
