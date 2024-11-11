@@ -84,6 +84,7 @@
 
                 const viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
                 viewer.start();
+                viewer.setToolbarVisibility(true);
                 viewer.loadExtension('Autodesk.Measure');           // Ruler/Measurement tool
 viewer.loadExtension('Autodesk.Section');           // Section tool
 viewer.loadExtension('Autodesk.Viewing.MarkupsCore'); // Markups tool
