@@ -82,7 +82,7 @@
                     
                 }
 
-                const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
+                const viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
                 viewer.start();
                    viewer.loadExtension('Autodesk.Measure');           // Ruler/Measurement tool
 viewer.loadExtension('Autodesk.Section');           // Section tool
