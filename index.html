@@ -113,9 +113,7 @@
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
                         viewer.explode(.7);
-                        viewer.forEachExtension(function(ext){
-                            logToPage(ext.id);
-                           });
+                        
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
