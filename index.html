@@ -27,59 +27,103 @@
             logDiv.appendChild(newMessage);
         }
 
-        const options = {
-            env: 'AutodeskProduction',
-            api: 'derivativeV2',
-            accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJjb2RlOmFsbCIsImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSIsImJ1Y2tldDpyZWFkIl0sImNsaWVudF9pZCI6IjU3bU1SMHlzTzNBZkc4bTR3Y1R1azJpTHdOTFRBV1VEMHJmU29PWURpbEt3WVJLNiIsImlzcyI6Imh0dHBzOi8vZGV2ZWxvcGVyLmFwaS5hdXRvZGVzay5jb20iLCJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImp0aSI6IjVuOUlYNWV0bFRPSTF5SmgwMjVyc0h0NkQ4VHJNZlFWOW5yVE5ZbmZmRkcxa2MyeG5LOXBneUJBdkpTb1FyYlYiLCJleHAiOjE3MzEzMjQzMzV9.h0gaur05GTJzkaSXeQmqSrGUVtUYyEmfY2b7MRUrOP5i4LlF_9fOUkMsAvt3YmbP0Z4d1VaaAIDkc-IkI373tQT1zQnWlu4IVe68JZ9IMFFHwlxdhU56PlAGnxQpsfy0qNzGT7lkzVL8NyJ9J7933nsYugmLTlr073hNhn-fSC9gtkb-KA58yazxzGEWv3AIy_oJdRUwlMnwnmFPkQ3mKJ4Tqwj1vgvJABapTH-iaAXWOhYK-VQcRhzlkdYzQb5O71oTAr8NUChX7Ld6wRiFq-75YgDBQJomoPkoZxnMJuzAQYkUV1r9IMQN_cSvGkA-aVbvyguNqMEE5fboZ2uNgg'  // Replace with a valid token
-        };
-
-        const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA=='; // Replace with your actual model URN
-
-        logToPage('Initializing Forge Viewer');
-
-        Autodesk.Viewing.Initializer(options, function() {
-            logToPage('Forge Viewer Initialized');
-
-            const viewerDiv = document.getElementById('forgeViewer');
-            if (!viewerDiv) {
-                logToPage('Error: forgeViewer div not found');
-                
-            }
-
-            const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-            if (!viewer.start()) {
-                logToPage('Error: Viewer failed to start');
-                
-            }
-
-            logToPage('Viewer started successfully');
-
-            // Load the MeasureTools extension
-            viewer.loadExtension('Autodesk.Viewing.MeasureTools').then(function() {
-                logToPage('Measure extension loaded successfully');
-            }).catch(function(error) {
-                logToPage('Error loading Measure extension: ' + error);
+        async function getToken(clientId, clientSecret) {
+            const url = "https://developer.api.autodesk.com/authentication/v1/authenticate";
+            const headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+            };
+            const body = new URLSearchParams({
+                client_id: clientId,
+                client_secret: clientSecret,
+                grant_type: "client_credentials",
+                scope: "data:read data:write" // Add or adjust scopes as needed
             });
 
-            // Load the document
-            Autodesk.Viewing.Document.load(documentId, function(doc) {
-                logToPage('Document loaded successfully');
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: headers,
+                    body: body
+                });
 
-                const defaultModel = doc.getRoot().getDefaultGeometry();
-                if (!defaultModel) {
-                    logToPage('Error: Default model geometry not found');
-                    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
-                    logToPage('Model loaded successfully in viewer');
-                }, function(errorCode, errorMessage) {
-                    logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
+                const data = await response.json();
+                return data.access_token;
+            } catch (error) {
+                console.error("Error fetching token:", error);
+                logToPage('Error fetching token: ' + error.message);
+            }
+        }
+
+        async function initializeViewer() {
+            const clientId = '57mMR0ysO3AfG8m4wcTuk2iLwNLTAWUD0rfSoOYDilKwYRK6';  // Replace with your client ID
+            const clientSecret = 'bLXSEAdC38GL1gJO6sEDWzaA4ayDG5cNfO83Y4LmC04YR0Le2vyAnO7F9Eauhl4Q';  // Replace with your client secret
+            const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA=='; // Replace with your actual model URN
+
+            const accessToken = await getToken(clientId, clientSecret);
+
+            if (!accessToken) {
+                logToPage('Failed to retrieve access token.');
+                return;
+            }
+
+            const options = {
+                env: 'AutodeskProduction',
+                accessToken: accessToken
+            };
+
+            logToPage('Initializing Forge Viewer');
+
+            Autodesk.Viewing.Initializer(options, function() {
+                logToPage('Forge Viewer Initialized');
+
+                const viewerDiv = document.getElementById('forgeViewer');
+                if (!viewerDiv) {
+                    logToPage('Error: forgeViewer div not found');
+                    return;
+                }
+
+                const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
+                if (!viewer.start()) {
+                    logToPage('Error: Viewer failed to start');
+                    return;
+                }
+
+                logToPage('Viewer started successfully');
+
+                // Load the MeasureTools extension
+                viewer.loadExtension('Autodesk.Viewing.MeasureTools').then(function() {
+                    logToPage('Measure extension loaded successfully');
+                }).catch(function(error) {
+                    logToPage('Error loading Measure extension: ' + error);
                 });
-            }, function(error) {
-                logToPage('Error loading document: ' + JSON.stringify(error));
+
+                // Load the document
+                Autodesk.Viewing.Document.load(documentId, function(doc) {
+                    logToPage('Document loaded successfully');
+
+                    const defaultModel = doc.getRoot().getDefaultGeometry();
+                    if (!defaultModel) {
+                        logToPage('Error: Default model geometry not found');
+                        return;
+                    }
+
+                    viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
+                        logToPage('Model loaded successfully in viewer');
+                    }, function(errorCode, errorMessage) {
+                        logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
+                    });
+                }, function(error) {
+                    logToPage('Error loading document: ' + JSON.stringify(error));
+                });
             });
-        });
+        }
+
+        // Call initializeViewer to start the viewer when the page is loaded
+        window.onload = initializeViewer;
     </script>
 </body>
 </html>
