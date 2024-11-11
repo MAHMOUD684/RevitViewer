@@ -80,7 +80,7 @@
             logToPage('Initializing Forge Viewer');
 
             Autodesk.Viewing.Initializer(options, function() {
-                logToPage('Forge Viewer Initialized');
+               logToPage('Forge Viewer Initialized');
 
                 const viewerDiv = document.getElementById('forgeViewer');
                 if (!viewerDiv) {
@@ -94,6 +94,7 @@
 var measureExtension = viewer.getExtension('Autodesk.Measure');
 if (measureExtension) {
     measureExtension.activate();
+    logToPage('measureExtension Initialized');
 }
 
 // Activate Section tool
@@ -105,19 +106,19 @@ if (sectionExtension) {
 // Activate Walk-through mode
 var bimWalkExtension = viewer.getExtension('Autodesk.BimWalk');
 if (bimWalkExtension) {
-  //  bimWalkExtension.activate();
+   bimWalkExtension.activate();
 }
 
 // Activate Markup tool
 var markupsExtension = viewer.getExtension('Autodesk.Viewing.MarkupsCore');
 if (markupsExtension) {
-   // markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
+   markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
 }
 
 // Open Model Structure (Model Browser) panel
 var modelStructureExtension = viewer.getExtension('Autodesk.Viewing.ModelStructure');
 if (modelStructureExtension) {
-  //  modelStructureExtension.show(); // Shows the model structure panel
+    modelStructureExtension.show(); // Shows the model structure panel
 }
               //  viewer.setToolbarVisible(true);
                 viewer.loadExtension('Autodesk.Measure');  // Load Measure Tool extension
