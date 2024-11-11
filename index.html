@@ -83,21 +83,19 @@
                 }
 
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-                if (!viewer.start()) {
-                    logToPage('Error: Viewer failed to start');
+                viewer.start();
+                   viewer.loadExtension('Autodesk.Measure');           // Ruler/Measurement tool
+viewer.loadExtension('Autodesk.Section');           // Section tool
+viewer.loadExtension('Autodesk.Viewing.MarkupsCore'); // Markups tool
+viewer.loadExtension('Autodesk.BimWalk');           // Walk-through mode
+viewer.loadExtension('Autodesk.Viewing.ModelStructure'); // Model tree/structure 
                     
-                }
+                
 
                 logToPage('Viewer started successfully');
 
                 // Load the MeasureTools extension
-                viewer.loadExtension('Autodesk.Explode').then((explodeExtension)=> {
-                console.log('Explode extension loaded:', explodeExtension);
-                 explodeExtension.activate();
-    // Now you can use `explodeExtension` to access the Explode API or its specific methods
-                }).catch((error) =>{
-                    console.log('Error loading Explode extension:', error);
-                });
+                
                 
 
                 // Load the document
