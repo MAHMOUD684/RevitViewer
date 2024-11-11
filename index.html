@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forge Viewer Test</title>
+    <title>Forge Viewer Teste</title>
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.css" />
     <style>
@@ -90,7 +90,7 @@
 
                 const viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv); // Use GuiViewer3D
                 viewer.start();
-              //  viewer.setToolbarVisible(true);
+                viewer.setToolbarVisible(true);
                 viewer.loadExtension('Autodesk.Measure');  // Load Measure Tool extension
 
                 logToPage('Viewer started successfully');
