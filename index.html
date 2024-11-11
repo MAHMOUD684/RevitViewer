@@ -98,8 +98,8 @@ if (measureExtension) {
 // Activate Section tool
 var sectionExtension = viewer.getExtension('Autodesk.Section');
 if (sectionExtension) {
-    sectionExtension.activate('x'); // You can specify a plane: 'x', 'y', or 'z'
-    logToPage('sectionExtension exist');
+    //sectionExtension.activate('x'); // You can specify a plane: 'x', 'y', or 'z'
+    
 }
 
 // Activate Walk-through mode
@@ -112,7 +112,7 @@ if (bimWalkExtension) {
 var markupsExtension = viewer.getExtension('Autodesk.Viewing.MarkupsCore');
 if (markupsExtension) {
     markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
-    logToPage('markupsExtension exist');
+   // logToPage('markupsExtension exist');
 }
 
 // Open Model Structure (Model Browser) panel
