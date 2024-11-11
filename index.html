@@ -95,7 +95,7 @@
                 console.log('Explode extension loaded:', explodeExtension);
                  explodeExtension.activate();
     // Now you can use `explodeExtension` to access the Explode API or its specific methods
-                }).catch((error) =>{
+                }).catch(function(error) =>{
                     console.log('Error loading Explode extension:', error);
                 });
                 
@@ -115,7 +115,7 @@
                         viewer.explode(.7);
                         viewer.forEachExtension(function(ext){
                             logToPage(ext.id);
-                           }) 
+                           });
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
