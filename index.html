@@ -113,6 +113,9 @@
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
                         viewer.explode(.7);
+                        viewer.forEachExtension(function(ext){
+                            logToPage(ext.id);
+                           }) 
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
@@ -120,9 +123,7 @@
                     logToPage('Error loading document: ' + JSON.stringify(error));
                 });
             });
-            viewer.forEachExtension(function(ext){
-    logToPage(ext.id);
- })
+            
         }
 
         // Call initializeViewer to start the viewer when the page is loaded
