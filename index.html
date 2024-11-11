@@ -43,13 +43,13 @@
             const viewerDiv = document.getElementById('forgeViewer');
             if (!viewerDiv) {
                 logToPage('Error: forgeViewer div not found');
-                return;
+                
             }
 
             const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
             if (!viewer.start()) {
                 logToPage('Error: Viewer failed to start');
-                return;
+                
             }
 
             logToPage('Viewer started successfully');
@@ -68,7 +68,7 @@
                 const defaultModel = doc.getRoot().getDefaultGeometry();
                 if (!defaultModel) {
                     logToPage('Error: Default model geometry not found');
-                    return;
+                    
                 }
 
                 viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
