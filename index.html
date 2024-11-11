@@ -91,11 +91,13 @@
                 logToPage('Viewer started successfully');
 
                 // Load the MeasureTools extension
-                viewer.loadExtension('Autodesk.Explode').then(function() {
-                    logToPage('Expload loaded successfully');
-                }).catch(function(error) {
-                    logToPage('Error loading Measure extension: ' + error);
-                });
+                viewer.loadExtension('Autodesk.Explode').then(function(explodeExtension) {
+                console.log('Explode extension loaded:', explodeExtension);
+                 explodeExtension.activate();
+    // Now you can use `explodeExtension` to access the Explode API or its specific methods
+}).catch(function(error) {
+    console.log('Error loading Explode extension:', error);
+});
                 
 
                 // Load the document
