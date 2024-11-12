@@ -97,7 +97,7 @@ Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
 const config = {
 extensions: ['Autodesk.DocumentBrowser']
 };
-                const viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv,config); // Use GuiViewer3D
+                const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv,config); // Use GuiViewer3D
                 viewer.start();
                 viewer.setNavigationLock(false); // Ensure navigation isn't locked
 //viewer.toolbar.setVisible(true); // Show toolbar explicitly
