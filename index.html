@@ -102,6 +102,12 @@ extensions: ['Autodesk.DocumentBrowser']
 };
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv,config); // Use GuiViewer3D
                 viewer.start();
+                const toolbar = viewer.getToolbar();
+if (toolbar) {
+    console.log("Toolbar is present and visible.");
+} else {
+    console.log("Toolbar is not loaded.");
+}
                 viewer.setNavigationLock(false); // Ensure navigation isn't locked
 //viewer.toolbar.setVisible(true); // Show toolbar explicitly
               //  viewer.setToolbarVisible(true);
@@ -157,7 +163,7 @@ if (modelStructureExtension) {
 
                     viewer.loadDocumentNode(doc, defaultModel, {}, function(model) {
                         logToPage('Model loaded successfully in viewer');
-                        viewer.explode(0.7);
+                        
                     }, function(errorCode, errorMessage) {
                         logToPage(`Error loading model: ${errorMessage} (Code: ${errorCode})`);
                     });
