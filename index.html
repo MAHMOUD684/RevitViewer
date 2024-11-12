@@ -77,9 +77,9 @@
                 return;
             }
             // Modify DefaultSettings before initializing the viewer
-Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
-Autodesk.Viewing.DefaultSettings.groundShadow = false;
-Autodesk.Viewing.DefaultSettings.ambientShadows = false;
+            Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
+            Autodesk.Viewing.DefaultSettings.groundShadow = false;
+            Autodesk.Viewing.DefaultSettings.ambientShadows = false;
 
 
             const options = {
@@ -97,26 +97,26 @@ Autodesk.Viewing.DefaultSettings.ambientShadows = false;
                     logToPage('Error: forgeViewer div not found');
                     return;
                 }
-const config = {
-extensions: ['Autodesk.DocumentBrowser']
-};
+                const config = {
+                extensions: ['Autodesk.DocumentBrowser']
+                };
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv,config); // Use GuiViewer3D
                 viewer.start();
                 const toolbar = viewer.getToolbar();
-if (toolbar) {
-    console.log("Toolbar is present and visible.");
-} else {
-    console.log("Toolbar is not loaded.");
-}
+                if (toolbar) {
+                     console.log("Toolbar is present and visible.");
+                 } else {
+                    console.log("Toolbar is not loaded.");
+                 }
                 viewer.setNavigationLock(false); // Ensure navigation isn't locked
 //viewer.toolbar.setVisible(true); // Show toolbar explicitly
               //  viewer.setToolbarVisible(true);
                 // Activate Measure tool
-var measureExtension = viewer.getExtension('Autodesk.Measure');
-if (measureExtension) {
-    measureExtension.activate();
-    logToPage('measureExtension Initialized');
-}
+                var measureExtension = viewer.getExtension('Autodesk.Measure');
+                if (measureExtension) {
+                    measureExtension.activate();
+                    logToPage('measureExtension Initialized');
+                }
 
 // Activate Section tool
 var sectionExtension = viewer.getExtension('Autodesk.Section');
