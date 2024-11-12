@@ -108,7 +108,7 @@
                  } else {
                     console.log("Toolbar is not loaded.");
                  }
-                viewer.setNavigationLock(false); // Ensure navigation isn't locked
+                 viewer.setNavigationLock(false); // Ensure navigation isn't locked
 //viewer.toolbar.setVisible(true); // Show toolbar explicitly
               //  viewer.setToolbarVisible(true);
                 // Activate Measure tool
@@ -119,28 +119,28 @@
                 }
 
 // Activate Section tool
-var sectionExtension = viewer.getExtension('Autodesk.Section');
-if (sectionExtension) {
-    sectionExtension.activate('x'); // You can specify a plane: 'x', 'y', or 'z'
-}
+                 var sectionExtension = viewer.getExtension('Autodesk.Section');
+                if (sectionExtension) {
+                       sectionExtension.activate('x'); // You can specify a plane: 'x', 'y', or 'z'
+                }
 
 // Activate Walk-through mode
-var bimWalkExtension = viewer.getExtension('Autodesk.BimWalk');
-if (bimWalkExtension) {
-   bimWalkExtension.activate();
-}
+                var bimWalkExtension = viewer.getExtension('Autodesk.BimWalk');
+                if (bimWalkExtension) {
+                    bimWalkExtension.activate();
+                 }
 
 // Activate Markup tool
-var markupsExtension = viewer.getExtension('Autodesk.Viewing.MarkupsCore');
-if (markupsExtension) {
-   markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
-}
+                  var markupsExtension = viewer.getExtension('Autodesk.Viewing.MarkupsCore');
+                  if (markupsExtension) {
+                   markupsExtension.enterEditMode(); // Starts the markup tool in edit mode
+                  }
 
 // Open Model Structure (Model Browser) panel
-var modelStructureExtension = viewer.getExtension('Autodesk.Viewing.ModelStructure');
-if (modelStructureExtension) {
-    modelStructureExtension.show(); // Shows the model structure panel
-}
+                 var modelStructureExtension = viewer.getExtension('Autodesk.Viewing.ModelStructure');
+                 if (modelStructureExtension) {
+                       modelStructureExtension.show(); // Shows the model structure panel
+                  }
             // Assuming 'viewer' is already initialized
 
 
