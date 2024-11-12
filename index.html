@@ -72,11 +72,6 @@
                 logToPage('Failed to retrieve access token.');
                 return;
             }
-
-            Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
-            Autodesk.Viewing.DefaultSettings.groundShadow = false;
-            Autodesk.Viewing.DefaultSettings.ambientShadows = false;
-
             const options = {
                 env: 'AutodeskProduction',
                 accessToken: accessToken
@@ -111,6 +106,16 @@
                     logToPage('Document Browser Extension loaded');
                 }).catch((error) => {
                     logToPage('Error loading Document Browser Extension: ' + error.message);
+                });
+                viewer.loadExtension('Autodesk.Explode').then(() => {
+                    logToPage('Autodesk Explode Extension loaded');
+                }).catch((error) => {
+                    logToPage('Error loading Autodesk.Explode Extension: ' + error.message);
+                });
+                viewer.loadExtension('Autodesk.BimWalk').then(() => {
+                    logToPage('Autodesk BimWalk Extension loaded');
+                }).catch((error) => {
+                    logToPage('Error loading Autodesk BimWalk Extension: ' + error.message);
                 });
 
                 // Event listener for selected element's properties
