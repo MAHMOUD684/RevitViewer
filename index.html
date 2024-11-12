@@ -76,6 +76,8 @@
                 logToPage('Failed to retrieve access token.');
                 return;
             }
+            // Modify DefaultSettings before initializing the viewer
+Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
 
             const options = {
                 env: 'AutodeskProduction',
