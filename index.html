@@ -7,18 +7,12 @@
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.css" />
     <style>
-        /* Fullscreen viewer on all devices */
         #forgeViewer {
             width: 100%;
             height: 100vh;
+            background-color: #f0f0f0;
         }
 
-        /* Adjust log area for mobile */
-        @media (max-width: 768px) {
-            #log {
-                display: none; /* Hide log on smaller screens */
-            }
-        }
     </style>
 </head>
 <body>
@@ -27,8 +21,7 @@
         <strong>Log Output:</strong>
         <div id="logMessages"></div>
     </div>
-    <div id="forgeViewer" style="width: 100%; height: 100vh; background-color: #f0f0f0;"></div>
-    
+    <div id="forgeViewer"></div>
 
     <script>
         function logToPage(message) {
@@ -67,7 +60,7 @@
         }
 
         async function initializeViewer() {
-            const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA=='; // Replace with your actual model URN
+            const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA==';
             const accessToken = await getToken();
 
             if (!accessToken) {
@@ -93,25 +86,17 @@
                 viewer.start();
                 viewer.setNavigationLock(false);
 
-                // Ensure Toolbar is initialized
-                viewer.addEventListener(Autodesk.Viewing.TOOLBAR_CREATED_EVENT, () => {
-                    let toolbar = viewer.getToolbar();
-                    if (!toolbar) {
-                        logToPage("Toolbar not found, attempting to create toolbar...");
-                        toolbar = viewer.createToolbar(); // Explicitly create if missing
-                    }
-
-                    if (toolbar) {
-                        logToPage("Toolbar initialized and visible.");
-                        toolbar.setVisible(true);
+                viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, (event) => {
+                    const dbIds = event.dbIdArray; // Array of selected element IDs
+                    if (dbIds.length > 0) {
+                        viewer.getProperties(dbIds[0], (props) => {
+                            logToPage('Selected Element Properties: ' + JSON.stringify(props, null, 2));
+                        }, (error) => {
+                            logToPage('Error fetching properties: ' + error.message);
+                        });
                     } else {
-                        logToPage("Failed to initialize toolbar.");
+                        logToPage('No element selected.');
                     }
-                });
-
-                // Load necessary extensions
-                viewer.loadExtension('Autodesk.DocumentBrowser').then(() => {
-                    logToPage('Document Browser Extension loaded');
                 });
 
                 Autodesk.Viewing.Document.load(documentId, (doc) => {
