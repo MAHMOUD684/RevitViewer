@@ -7,11 +7,19 @@
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.css" />
     <style>
-        #forgeViewer {
-            width: 100%;
-            height: 50vh; /* Fixed height of 90% of the viewport height */
-        }
-    </style>
+   /* Fullscreen viewer on all devices */
+   #forgeViewer {
+       width: 100%;
+       height: 100vh;
+   }
+
+   /* Adjust log area or other elements if needed for mobile */
+   @media (max-width: 768px) {
+       #log {
+           display: none; /* Hide the log area on smaller screens to focus on the viewer */
+       }
+   }
+</style>
 </head>
 <body>
     <h1>Forge Viewer Test</h1>
