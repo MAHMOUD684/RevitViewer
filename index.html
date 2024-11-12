@@ -78,6 +78,9 @@
             }
             // Modify DefaultSettings before initializing the viewer
 Autodesk.Viewing.DefaultSettings.optimizeNavigation = true;
+Autodesk.Viewing.DefaultSettings.groundShadow = false;
+Autodesk.Viewing.DefaultSettings.ambientShadows = false;
+
 
             const options = {
                 env: 'AutodeskProduction',
