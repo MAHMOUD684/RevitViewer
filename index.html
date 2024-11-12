@@ -66,7 +66,7 @@
         }
 
         async function initializeViewer() {
-            const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA==';
+            const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHNzcnZ0djMvSFNULnJ2dA=='; // Replace with your actual model URN
             const accessToken = await getToken();
 
             if (!accessToken) {
@@ -88,20 +88,27 @@
             Autodesk.Viewing.Initializer(options, () => {
                 const viewerDiv = document.getElementById('forgeViewer');
                 const viewer = new Autodesk.Viewing.GuiViewer3D(viewerDiv);
-                
-                viewer.start();
-                viewer.setNavigationLock(false); 
 
+                viewer.start();
+                viewer.setNavigationLock(false);
+
+                // Ensure Toolbar is initialized
                 viewer.addEventListener(Autodesk.Viewing.TOOLBAR_CREATED_EVENT, () => {
-                    const toolbar = viewer.getToolbar();
+                    let toolbar = viewer.getToolbar();
+                    if (!toolbar) {
+                        logToPage("Toolbar not found, attempting to create toolbar...");
+                        toolbar = viewer.createToolbar(); // Explicitly create if missing
+                    }
+
                     if (toolbar) {
-                        logToPage("Toolbar is present and visible.");
+                        logToPage("Toolbar initialized and visible.");
                         toolbar.setVisible(true);
                     } else {
-                        logToPage("Toolbar not found.");
+                        logToPage("Failed to initialize toolbar.");
                     }
                 });
 
+                // Load necessary extensions
                 viewer.loadExtension('Autodesk.DocumentBrowser').then(() => {
                     logToPage('Document Browser Extension loaded');
                 });
