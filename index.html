@@ -13,6 +13,11 @@
             background-color: #f0f0f0;
         }
 
+        @media (max-width: 768px) {
+            #log {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -86,8 +91,31 @@
                 viewer.start();
                 viewer.setNavigationLock(false);
 
+                viewer.addEventListener(Autodesk.Viewing.TOOLBAR_CREATED_EVENT, () => {
+                    let toolbar = viewer.getToolbar();
+                    if (!toolbar) {
+                        logToPage("Toolbar not found, attempting to create toolbar...");
+                        toolbar = viewer.createToolbar();
+                    }
+
+                    if (toolbar) {
+                        logToPage("Toolbar initialized and visible.");
+                        toolbar.setVisible(true);
+                    } else {
+                        logToPage("Failed to initialize toolbar.");
+                    }
+                });
+
+                // Load all necessary extensions
+                viewer.loadExtension('Autodesk.DocumentBrowser').then(() => {
+                    logToPage('Document Browser Extension loaded');
+                }).catch((error) => {
+                    logToPage('Error loading Document Browser Extension: ' + error.message);
+                });
+
+                // Event listener for selected element's properties
                 viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, (event) => {
-                    const dbIds = event.dbIdArray; // Array of selected element IDs
+                    const dbIds = event.dbIdArray;
                     if (dbIds.length > 0) {
                         viewer.getProperties(dbIds[0], (props) => {
                             logToPage('Selected Element Properties: ' + JSON.stringify(props, null, 2));
