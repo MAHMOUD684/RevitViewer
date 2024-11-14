@@ -153,6 +153,7 @@
 
                     viewer.loadDocumentNode(doc, defaultModel).then(() => {
                         logToPage('Model loaded successfully in viewer');
+                        addDefaultToolbarButtons(viewer);
                     }).catch((error) => {
                         logToPage(`Error loading model: ${error.message}`);
                     });
@@ -161,6 +162,46 @@
                     logToPage('Error loading document: ' + JSON.stringify(error));
                 });
             });
+        }
+        function addDefaultToolbarButtons(viewer) {
+    // Access default viewer toolbar
+    const toolbar = viewer.getToolbar();
+
+    // Add First Person Tool
+    const firstPersonButton = toolbar.getControl('navTools').getControl('toolbar-firstpersonTool');
+    if (firstPersonButton) {
+        firstPersonButton.setToolTip('First Person');
+    }
+
+    // Add Distance Measurement Tool
+    const measureButton = toolbar.getControl('measureTools').getControl('toolbar-measureTool');
+    if (measureButton) {
+        measureButton.setToolTip('Measure');
+    }
+
+    // Add Section Tool
+    const sectionButton = toolbar.getControl('modelTools').getControl('toolbar-sectionTool');
+    if (sectionButton) {
+        sectionButton.setToolTip('Section Analysis');
+    }
+
+    // Add Orbit Tool
+    const orbitButton = toolbar.getControl('navTools').getControl('toolbar-orbitTool');
+    if (orbitButton) {
+        orbitButton.setToolTip('Orbit View');
+    }
+
+    // Add Explode Tool
+    const explodeButton = toolbar.getControl('modelTools').getControl('toolbar-explodeTool');
+    if (explodeButton) {
+        explodeButton.setToolTip('Explode Model');
+    }
+
+    // Fullscreen Toggle
+    const fullscreenButton = toolbar.getControl('settingsTools').getControl('toolbar-fullscreenTool');
+    if (fullscreenButton) {
+        fullscreenButton.setToolTip('Full Screen');
+    }
         }
 
         function customizeToolbarPosition(toolbar, position = { bottom: '10px', right: '10px' }) {
